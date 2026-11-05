@@ -4,24 +4,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SoundTrack Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <!-- PyScript: permite rodar Python no navegador -->
   <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
   <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
 </head>
 <body>
-  <header>
-    <h1>🎵 SoundTrack Finder</h1>
-    <button id="theme-btn" type="button">☀️ / 🌙</button>
-  </header>
+  <div class="app">
 
-  <form id="search-form">
-    <input id="search-input" type="text" placeholder="Busque um artista ou música (ex: queen)" autocomplete="off">
-    <button id="search-btn" type="submit">Buscar</button>
-  </form>
+    <!-- ===== BARRA LATERAL ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="logo">♪</span>
+        <span>SoundTrack</span>
+      </div>
 
-  <p id="status">Digite algo para começar.</p>
-  <main id="grid"></main>
+      <button class="nav-btn" data-acao="ir-busca">🔍&nbsp; Buscar músicas</button>
+
+      <section class="bloco">
+        <div class="bloco-titulo">
+          <h2>Minha biblioteca</h2>
+          <span class="contador" id="lib-count">0</span>
+        </div>
+        <ul class="lista" id="lib-list"></ul>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-titulo">
+          <h2>Álbuns</h2>
+          <span class="contador" id="album-count">0</span>
+        </div>
+        <form id="album-form" class="album-form">
+          <input id="album-input" type="text" placeholder="Nome do novo álbum" maxlength="40" autocomplete="off">
+          <button type="submit" title="Criar álbum">＋</button>
+        </form>
+        <ul class="lista" id="album-list"></ul>
+      </section>
+    </aside>
+
+    <!-- ===== CONTEÚDO ===== -->
+    <div class="content">
+      <header class="topbar">
+        <button class="icone menu-btn" data-acao="menu" type="button" aria-label="Abrir menu">☰</button>
+        <form id="search-form">
+          <input id="search-input" type="text" placeholder="Busque um artista ou música…" autocomplete="off">
+          <button id="search-btn" type="submit">Buscar</button>
+        </form>
+        <button id="theme-btn" class="icone" type="button" title="Trocar tema">🌓</button>
+      </header>
+
+      <div class="scroll">
+        <p id="status">Digite algo para começar.</p>
+        <main id="grid"></main>
+        <section id="album-view" hidden></section>
+      </div>
+    </div>
+
+    <!-- ===== PLAYER FIXO ===== -->
+    <footer class="player-bar">
+      <div class="tocando">
+        <div class="tocando-capa" id="np-capa">♪</div>
+        <div class="tocando-info">
+          <strong id="np-nome">Nada tocando</strong>
+          <span id="np-artista">Escolha uma música para ouvir</span>
+        </div>
+      </div>
+      <audio id="player" controls preload="none"></audio>
+    </footer>
+
+  </div>
 
   <script type="py" src="./main.py" config="./pyscript.toml"></script>
 </body>
